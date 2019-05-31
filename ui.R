@@ -13,16 +13,15 @@ library(shiny)
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("Suicide Rates In Various Countries"),
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
+      selectInput("input_country","Country", choices = sort(data$country), multiple = TRUE),
+      radioButtons("gender","Sex", choices = c("Male" , "Female", "Both")),
+      selectInput("input_age","Age Group", choices = sort(data$age)),
+       checkboxGroupInput("input_generation", "Generatios:",choices = unique(data$generation))
     ),
     
     # Show a plot of the generated distribution

@@ -9,6 +9,7 @@
 
 library(shiny)
 
+data <- read.csv("data/master.csv")
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
    
