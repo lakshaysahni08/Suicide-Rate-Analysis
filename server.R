@@ -8,20 +8,25 @@
 #
 
 library(shiny)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(leaflet)
 
 data <- read.csv("data/master.csv")
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
    
-  output$distPlot <- renderPlot({
-    
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2] 
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
-    
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white')
-    
+
+  output$table <- renderDataTable({
+    if(input$input_gender == "Both") {
+      desired_df <-  data %>%
+        filter(input$input_country == country) 
+    } else {
+    desired_df <- data %>%
+      filter(input$input_country == country,input$input_gender == sex) 
+    }
   })
   
 })

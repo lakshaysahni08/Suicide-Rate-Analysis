@@ -8,6 +8,11 @@
 #
 
 library(shiny)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(stringr)
+library(leaflet)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -18,15 +23,15 @@ shinyUI(fluidPage(
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
     sidebarPanel(
-      selectInput("input_country","Country", choices = sort(data$country), multiple = TRUE),
-      radioButtons("gender","Sex", choices = c("Male" , "Female", "Both")),
+      selectInput("input_country","Country", choices = sort(data$country)),
+      radioButtons("input_gender","Sex", choices = c("male" , "female", "Both")),
       selectInput("input_age","Age Group", choices = sort(data$age)),
        checkboxGroupInput("input_generation", "Generatios:",choices = unique(data$generation))
     ),
     
     # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("distPlot")
+       dataTableOutput("table")
     )
   )
 ))
