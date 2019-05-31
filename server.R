@@ -22,10 +22,10 @@ shinyServer(function(input, output) {
   output$table <- renderDataTable({
     if(input$input_gender == "Both") {
       desired_df <-  data %>%
-        filter(input$input_country == country) 
+        filter(input$input_country == country,input$input_age == age,input$input_generation == generation) 
     } else {
     desired_df <- data %>%
-      filter(input$input_country == country,input$input_gender == sex) 
+      filter(input$input_country == country,input$input_gender == sex,input$input_age == age,input$input_generation == generation) 
     }
   })
   
