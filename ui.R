@@ -21,17 +21,29 @@ shinyUI(fluidPage(
   titlePanel("Suicide Rates In Various Countries"),
   
   # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-      selectInput("input_country","Country", choices = sort(data$country)),
-      radioButtons("input_gender","Sex", choices = c("male" , "female", "Both")),
-      selectInput("input_age","Age Group", choices = sort(data$age)),
-       checkboxGroupInput("input_generation", "Generatios:",choices = unique(data$generation))
-    ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-       dataTableOutput("table")
+  navbarPage("A Look into Suicide Rates",  
+    tabPanel("Information",
+      sidebarLayout(
+        sidebarPanel(
+          selectInput("input_year", "Year", choices = sort(data$year)),
+          selectInput("input_country","Country", choices = sort(data$country)),
+          radioButtons("input_gender","Sex", choices = c("male" , "female", "Both")),
+          selectInput("input_age","Age Group", choices = sort(data$age)),
+          checkboxGroupInput("input_generation", "Generatios:",choices = unique(data$generation))
+        ),
+        
+        # Show a plot of the generated distribution
+        mainPanel(
+          tabsetPanel(
+            tabPanel("Table",
+                     dataTableOutput("table")
+            ), 
+            tabPanel("Visualization",
+                     plotOutput("lineg"))
+          )
+        )
+      )
     )
   )
+  
 ))
