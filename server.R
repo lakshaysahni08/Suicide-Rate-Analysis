@@ -14,7 +14,7 @@ library(ggplot2)
 library(stringr)
 library(leaflet)
 
-data <- read.csv("data/master.csv")
+data <- read.csv("data/master.csv", fileEncoding="UTF-8-BOM", stringsAsFactors = FALSE)
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
    
@@ -23,10 +23,19 @@ shinyServer(function(input, output) {
     if(input$input_gender == "Both") {
       desired_df <-  data %>%
         filter(input$input_country == country,input$input_age == age,input$input_generation == generation) 
-    } else {
+    } 
     desired_df <- data %>%
       filter(input$input_country == country,input$input_gender == sex,input$input_age == age,input$input_generation == generation) 
-    }
+  })
+  
+  # Line graph for showing relationship
+  # NEED TO UPDATE: ERROR MESSAGE FOR COUNTRIES AND YEARS THAT CANNOT SHOW
+  output$lineg <- renderPlot({
+    data_filter_df <- data %>% 
+      filter(input$input_year == year, input$input_country == country, input$input_gender == sex)
+    
+    output <- barplot(data_filter_df$suicides_no, names.arg = as.character(sort(data_filter_df$age)))
+    
   })
   
 })
