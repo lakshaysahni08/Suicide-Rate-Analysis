@@ -14,8 +14,9 @@ library(ggplot2)
 library(stringr)
 library(leaflet)
 
+# Data read and organized to be readable in good format
 data <- read.csv("data/master.csv", fileEncoding="UTF-8-BOM", stringsAsFactors = FALSE)
-# Define server logic required to draw a histogram
+# Define server 
 shinyServer(function(input, output) {
    
 
@@ -38,21 +39,25 @@ shinyServer(function(input, output) {
     
   })
   
-  # Bar graph for showing relationship
+  # Bar graph for showing relationship between age group and number of suicide
   output$barg <- renderPlot({
     
+    # the user selects both in the input gender widget then display bar graph with data containing both sexes
     if ( input$input_gender == "Both") {
       both_case <- data %>% filter(input$input_year == year, input$input_country == country)
       
+      # Error message that there is no data available (data for graph is empty)
       validate(
         need(nrow(both_case) > 1, message = "Data not available / No recorded data available.")
       )
       
+      # bar graph with ggplot 
       output <- ggplot(both_case, aes(both_case$age, both_case$suicides_no, fill = both_case$sex)) + geom_bar(stat="identity", position ="dodge") +
         scale_fill_brewer(palette = "Set1")
       output
       
     } else {
+      ## the user selects either male or female in the gender selection widget
       data_filter_df <- data %>% 
         filter(input$input_year == year, input$input_country == country, input$input_gender == sex)
       
@@ -70,6 +75,7 @@ shinyServer(function(input, output) {
     
   })
   
+  # Text explanation for bar graph 
   output$bar_explanation <- renderText(
     explanation <- paste("The graph (if displayed) shows information about suicide numbers in each particular age group in the selected 
                          year that is chosen. A comparison of this allows us to be able to conclude which age group, in that country in the
