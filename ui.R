@@ -39,11 +39,11 @@ shinyUI(fluidPage(
                      dataTableOutput("table")
             ), 
             tabPanel("Visualization",
-                     plotOutput("lineg"))
+                     plotOutput("barg"),
+                     textOutput("bar_explanation"))
           )
         )
       )
     )
-  )
-  
+  )  
 ))
