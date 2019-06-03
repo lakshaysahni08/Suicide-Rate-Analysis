@@ -25,18 +25,18 @@ shinyServer(function(input, output) {
     validate(
       need(input$input_year, message = "Please select year."),
       need(input$input_country, message = "Please select country."),
-      need(input$input_age, message = "Please select intended age group."),
-      need(input$input_generation, message = "Please select generation. Can choose multiple values.")
+      need(input$input_age, message = "Please select intended age group.")
+      
     ) 
     
     # table organization
     if(input$input_gender == "Both") {
       desired_df <-  data %>%
-        filter(input$input_country == country,input$input_age == age,input$input_generation == generation) 
-    } 
+        filter(input$input_country == country,input$input_age == age,input$input_year == year) %>% select(country,year,sex,age,suicides_no,population,suicides.100k.pop,generation)
+    } else {
     desired_df <- data %>%
-      filter(input$input_country == country,input$input_gender == sex,input$input_age == age,input$input_generation == generation) 
-    
+      filter(input$input_country == country,input$input_gender == sex,input$input_age == age,input$input_year == year) %>% select(country,year,sex,age,suicides_no,population,suicides.100k.pop,generation)
+    }
   })
   
   # Bar graph for showing relationship between age group and number of suicide

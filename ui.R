@@ -28,16 +28,15 @@ shinyUI(fluidPage(
           selectInput("input_year", "Year", choices = sort(data$year)),
           selectInput("input_country","Country", choices = sort(data$country)),
           radioButtons("input_gender","Sex", choices = c("male" , "female", "Both")),
-          selectInput("input_age","Age Group", choices = sort(data$age)),
-          checkboxGroupInput("input_generation", "Generatios:",choices = unique(data$generation))
+          selectInput("input_age","Age Group", choices = sort(data$age))
+        
         ),
         
         # Show a plot of the generated distribution
         mainPanel(
           tabsetPanel(
             tabPanel("Table",
-                     dataTableOutput("table"),
-                     ), 
+                     dataTableOutput("table")),
             tabPanel("Visualization",
                      plotOutput("barg"),
                      textOutput("bar_explanation"))
