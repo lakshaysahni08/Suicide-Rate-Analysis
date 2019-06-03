@@ -20,22 +20,60 @@ shinyServer(function(input, output) {
    
 
   output$table <- renderDataTable({
+    # Warning messages for user to see if no values selected
+    validate(
+      need(input$input_year, message = "Please select year."),
+      need(input$input_country, message = "Please select country."),
+      need(input$input_age, message = "Please select intended age group."),
+      need(input$input_generation, message = "Please select generation. Can choose multiple values.")
+    ) 
+    
+    # table organization
     if(input$input_gender == "Both") {
       desired_df <-  data %>%
         filter(input$input_country == country,input$input_age == age,input$input_generation == generation) 
     } 
     desired_df <- data %>%
       filter(input$input_country == country,input$input_gender == sex,input$input_age == age,input$input_generation == generation) 
+    
   })
   
-  # Line graph for showing relationship
-  # NEED TO UPDATE: ERROR MESSAGE FOR COUNTRIES AND YEARS THAT CANNOT SHOW
-  output$lineg <- renderPlot({
-    data_filter_df <- data %>% 
-      filter(input$input_year == year, input$input_country == country, input$input_gender == sex)
+  # Bar graph for showing relationship
+  output$barg <- renderPlot({
     
-    output <- barplot(data_filter_df$suicides_no, names.arg = as.character(sort(data_filter_df$age)))
+    if ( input$input_gender == "Both") {
+      both_case <- data %>% filter(input$input_year == year, input$input_country == country)
+      
+      validate(
+        need(nrow(both_case) > 1, message = "Data not available / No recorded data available.")
+      )
+      
+      output <- ggplot(both_case, aes(both_case$age, both_case$suicides_no, fill = both_case$sex)) + geom_bar(stat="identity", position ="dodge") +
+        scale_fill_brewer(palette = "Set1")
+      output
+      
+    } else {
+      data_filter_df <- data %>% 
+        filter(input$input_year == year, input$input_country == country, input$input_gender == sex)
+      
+      # Error message to show if data not available
+      validate(
+        need(input$input_year, message = "Please select a year"),
+        need(input$input_country, message = "Please choose a country."),
+        need(nrow(data_filter_df) > 1, message = "Data not available/No recorded data available.")
+      )
+      
+      # check if as.character is actually needed later
+      output <- barplot(data_filter_df$suicides_no, names.arg = as.character(sort(data_filter_df$age)), main = "Number of Suicides in each Age Group",
+                        xlab = "Age Groups", ylab = "Number of Suicides Recorded", col = "lightskyblue1", border = "lightskyblue1")
+    }
     
   })
+  
+  output$bar_explanation <- renderText(
+    explanation <- paste("The graph (if displayed) shows information about suicide numbers in each particular age group in the selected 
+                         year that is chosen. A comparison of this allows us to be able to conclude which age group, in that country in the
+                         particular year contains the highest suicide numbers.")
+  )
   
 })
