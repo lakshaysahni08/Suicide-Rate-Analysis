@@ -29,7 +29,6 @@ shinyUI(fluidPage(
           selectInput("input_country","Country", choices = sort(data$country)),
           radioButtons("input_gender","Sex", choices = c("male" , "female", "Both")),
           selectInput("input_age","Age Group", choices = sort(data$age))
-        
         ),
         
         # Show a plot of the generated distribution
