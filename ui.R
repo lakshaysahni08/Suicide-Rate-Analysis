@@ -38,15 +38,26 @@ shinyUI(fluidPage(
         ),
     tabPanel("Visualization",
              sidebarLayout(
-               sidebarPanel(selectInput("input_year", "Year", choices = sort(data$year)),
-                            selectInput("input_country","Country", choices = sort(data$country)),
-                            radioButtons("input_gender","Sex", choices = c("male" , "female", "Both"))),
+               sidebarPanel(selectInput("vis_year", "Year", choices = sort(data$year)),
+                            selectInput("vis_country","Country", choices = sort(data$country)),
+                            radioButtons("vis_gender","Sex", choices = c("male" , "female", "Both"))),
                mainPanel(
                               plotOutput("barg"),
                               textOutput("bar_explanation")
+              )
              )
+             ),
+    tabPanel("Line Graph Visual", 
+             sidebarLayout(
+               sidebarPanel(
+                 sliderInput("input_range", "Year Range to be Displayed", 
+                             min = 1985, max = 2016, value = c(1996, 2005))),
+                 mainPanel(
+                   plotOutput("lineg")
+                 )
              )
-             )
+             
+    )
       )
    )
  )

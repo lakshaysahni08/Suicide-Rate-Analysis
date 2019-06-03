@@ -44,7 +44,7 @@ shinyServer(function(input, output) {
     
     # the user selects both in the input gender widget then display bar graph with data containing both sexes
     if ( input$input_gender == "Both") {
-      both_case <- data %>% filter(input$input_year == year, input$input_country == country)
+      both_case <- data %>% filter(input$vis_year == year, input$vis_country == country)
       
       # Error message that there is no data available (data for graph is empty)
       validate(
@@ -59,12 +59,12 @@ shinyServer(function(input, output) {
     } else {
       ## the user selects either male or female in the gender selection widget
       data_filter_df <- data %>% 
-        filter(input$input_year == year, input$input_country == country, input$input_gender == sex)
+        filter(input$vis_year == year, input$vis_country == country, input$vis_gender == sex)
       
       # Error message to show if data not available
       validate(
-        need(input$input_year, message = "Please select a year"),
-        need(input$input_country, message = "Please choose a country."),
+        need(input$vis_year, message = "Please select a year"),
+        need(input$vis_country, message = "Please choose a country."),
         need(nrow(data_filter_df) > 1, message = "Data not available/No recorded data available.")
       )
       
@@ -82,6 +82,14 @@ shinyServer(function(input, output) {
                          particular year contains the highest suicide numbers.")
   )
   
-  
+  # Line graph
+  output$lineg <- renderPlot({
+    print(input$input_range)
+    line_data <- data %>% 
+      filter(data$country == "Argentina") %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% filter( input$input_range[1] <= year & input$input_range[2] >= year )
+   
+    plot_view <- ggplot(data = line_data, aes(x = line_data$year, y = line_data$suicides)) + geom_line() + geom_point() 
+    plot_view
+  })
   
 })
