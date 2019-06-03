@@ -36,8 +36,8 @@ shinyUI(fluidPage(
         mainPanel(
           tabsetPanel(
             tabPanel("Table",
-                     dataTableOutput("table")
-            ), 
+                     dataTableOutput("table"),
+                     ), 
             tabPanel("Visualization",
                      plotOutput("barg"),
                      textOutput("bar_explanation"))

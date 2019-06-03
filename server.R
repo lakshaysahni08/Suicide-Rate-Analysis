@@ -82,4 +82,6 @@ shinyServer(function(input, output) {
                          particular year contains the highest suicide numbers.")
   )
   
+  
+  
 })
