@@ -48,8 +48,3 @@ our dataset:
 
 **Kevin Ko, Lakshay Sahni, Ethan Tong**
 
-![Kevin Ko]()
-
-![Lakshay Sahni]()
-
-![Ethan Tong]()

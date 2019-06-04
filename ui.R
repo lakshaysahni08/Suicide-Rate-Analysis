@@ -83,8 +83,10 @@ shinyUI(fluidPage(
                        plotlyOutput("pie_analysis")
                      )
                    )
-                   
-                   )
+        ),tabPanel("About Us",
+                   textOutput("About_us"
+                     
+                   ))
     
      )
    )
