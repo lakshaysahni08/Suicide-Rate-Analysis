@@ -19,7 +19,7 @@ data <- read.csv("data/master.csv", fileEncoding="UTF-8-BOM", stringsAsFactors =
 # Define server 
 shinyServer(function(input, output) {
    
-
+ 
   output$table <- renderDataTable({
     # Warning messages for user to see if no values selected
     validate(

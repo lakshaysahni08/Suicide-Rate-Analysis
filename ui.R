@@ -16,63 +16,70 @@ library(leaflet)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
-  
-  # Application title
-  titlePanel("Suicide Rates In Various Countries"),
-  
-  # Sidebar with a slider input for number of bins 
-  navbarPage("Menu",
-  navbarMenu("Information",  
-    tabPanel("Table",
-      sidebarLayout(
-        sidebarPanel(
-          selectInput("input_year", "Year", choices = sort(data$year)),
-          selectInput("input_country","Country", choices = sort(data$country)),
-          radioButtons("input_gender","Sex", choices = c("male" , "female", "Both")),
-          selectInput("input_age","Age Group", choices = sort(data$age))
-        ), mainPanel(
-          dataTableOutput("table")
-        )
-
-          )
-        ),
-    tabPanel("Visualization",
-             sidebarLayout(
-               sidebarPanel(selectInput("vis_year", "Year", choices = sort(data$year)),
-                            selectInput("vis_country","Country", choices = sort(data$country)),
-                            radioButtons("vis_gender","Sex", choices = c("male" , "female", "Both"))),
-               mainPanel(
-                              plotOutput("barg"),
-                              textOutput("bar_explanation")
+    
+    # Application title
+    titlePanel("Suicide Rates In Various Countries"),
+    
+    # Sidebar with a slider input for number of bins 
+    navbarPage("Menu",
+    
+                 tabPanel("Home", 
+              
+                                    img(src = "https://edenvaleinn.com/wp-content/uploads/2018/10/folsom-train-ride-1500x609.jpg")
+                         
+                        ),
+      navbarMenu("Information",  
+        
+        tabPanel("Table",
+          sidebarLayout(
+            sidebarPanel(
+              selectInput("input_year", "Year", choices = sort(data$year)),
+              selectInput("input_country","Country", choices = sort(data$country)),
+              radioButtons("input_gender","Sex", choices = c("male" , "female", "Both")),
+              selectInput("input_age","Age Group", choices = sort(data$age))
+            ), mainPanel(
+              dataTableOutput("table")
+            )
+    
               )
-             )
-             ),
-    tabPanel("Line Graph Visual", 
-             sidebarLayout(
-               sidebarPanel(
-                 selectInput("country_for_range", "Country", choices = sort(data$country)),
-                 sliderInput("input_range", "Year Range to be Displayed", 
-                             min = 1985, max = 2016, value = c(1996, 2005))),
-                 mainPanel(
-                   plotOutput("lineg")
+            ),
+        tabPanel("Visualization",
+                 sidebarLayout(
+                   sidebarPanel(selectInput("vis_year", "Year", choices = sort(data$year)),
+                                selectInput("vis_country","Country", choices = sort(data$country)),
+                                radioButtons("vis_gender","Sex", choices = c("male" , "female", "Both"))),
+                   mainPanel(
+                                  plotOutput("barg"),
+                                  textOutput("bar_explanation")
+                  )
                  )
-             )
-             
-    )
-      ),tabPanel("Analysis",
+                 ),
+        tabPanel("Line Graph Visual", 
                  sidebarLayout(
                    sidebarPanel(
-                     selectInput("country_for_analysis", "Country", choices = sort(data$country)),
-                     sliderInput("input_range_analysis", "Year Range to be Displayed", 
-                                 min = 1985, max = 2016, value = c(1996, 2005))
-                   ), mainPanel(
-                     textOutput("analysis")
+                     selectInput("country_for_range", "Country", choices = sort(data$country)),
+                     sliderInput("input_range", "Year Range to be Displayed", 
+                                 min = 1985, max = 2016, value = c(1996, 2005))),
+                     mainPanel(
+                       plotOutput("lineg")
                    )
-                 )
-                 
-                 )
-  
+               )
+               
+      )
+        ),tabPanel("Analysis",
+                   sidebarLayout(
+                     sidebarPanel(
+                       selectInput("country_for_analysis", "Country", choices = sort(data$country)),
+                       sliderInput("input_range_analysis", "Year Range to be Displayed", 
+                                   min = 1985, max = 2016, value = c(1996, 2005))
+                     ), mainPanel(
+                       textOutput("analysis")
+                     )
+                   )
+                   
+                   )
+    
+     )
    )
- )
-)  
+  )  
 
