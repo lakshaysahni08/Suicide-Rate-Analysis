@@ -11,6 +11,7 @@ library(shiny)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(plotly)
 library(stringr)
 library(shinythemes)
 
@@ -75,7 +76,11 @@ shinyUI(fluidPage(
                                    min = 1985, max = 2016, value = c(1996, 2005))
                      ), mainPanel(
                        textOutput("analysis"),
-                       splitLayout(cellWidths = c("50%","50%"), plotOutput("analysis_gdp"), plotOutput("analysis_suicides"))
+                       splitLayout(cellWidths = c("50%","50%"), plotOutput("analysis_gdp"), plotOutput("analysis_suicides")),
+                       selectInput("analysis_for_year", "Select One Specific Year", choices = sort(data$year)),
+                       selectInput("analysis_for_sex", "Select Sex", choices = unique(data$sex)),
+                       #splitLayout(cellWidths = c("50%","50%"), selectInput("analysis_for_year"),selectInput("analysis_for_sex")),
+                       plotlyOutput("pie_analysis")
                      )
                    )
                    

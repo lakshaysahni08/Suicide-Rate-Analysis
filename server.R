@@ -13,6 +13,7 @@ library(tidyr)
 library(ggplot2)
 library(stringr)
 library(leaflet)
+library(plotly)
 
 # Data read and organized to be readable in good format
 data <- read.csv("data/master.csv", fileEncoding="UTF-8-BOM", stringsAsFactors = FALSE)
@@ -104,9 +105,9 @@ shinyServer(function(input, output) {
       perc_inc <- 0
     }
     if(change > 0 & nrow(analysis_data) > 1) {
-      text <- paste0("In", input$country_for_analysis," there was a ", perc_inc,"% increase in suicide rates.")
+      text <- paste0("In ", input$country_for_analysis," there was a ", perc_inc,"% increase in suicide rates.")
     } else if(change <= 0  & nrow(analysis_data) > 1){
-      text <- paste0("In", input$country_for_analysis, " there was a ", abs(perc_inc),"% decrease in suicide rates.")
+      text <- paste0("In ", input$country_for_analysis, " there was a ", abs(perc_inc),"% decrease in suicide rates.")
     }  else {
       text <- paste0("Data is not available")
     }
@@ -135,8 +136,13 @@ shinyServer(function(input, output) {
     testing
   })
   
-  
-  
+  output$pie_analysis <- renderPlotly({
+    test2 <- data %>% filter(input$country_for_analysis == country, input$analysis_for_year == year, input$analysis_for_sex == sex)
+    value <- test2[,5]
+    p <- plot_ly(test2, labels = test2$age , values = value, type = 'pie') 
+    p
+  })
   
   
 })
+
