@@ -95,10 +95,22 @@ shinyServer(function(input, output) {
   output$analysis <- renderText({
     analysis_data <- data %>% filter(input$country_for_analysis == country) %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% 
       filter( input$input_range_analysis[1] <= year & input$input_range_analysis[2] >= year ) %>% select(suicides)
-    View(analysis_data)
-    print(analysis_data[[0]])
-    
-    paste0(analysis_data[[0]])
+    old <- as.integer(analysis_data[1,1])
+    new <- as.integer(analysis_data[nrow(analysis_data),1])
+    change <- new - old
+    if(old != 0){
+     perc_inc <- round((change/old)*100,2)
+    } else {
+      perc_inc <- 0
+    }
+    if(change > 0 & nrow(analysis_data) > 1) {
+      text <- paste0("In", input$country_for_analysis," there was a ", perc_inc,"% increase in suicide rates.")
+    } else if(change <= 0  & nrow(analysis_data) > 1){
+      text <- paste0("In", input$country_for_analysis, " there was a ", abs(perc_inc),"% decrease in suicide rates.")
+    }  else {
+      text <- paste0("Data is not available")
+    }
+    text
   })
   
 })

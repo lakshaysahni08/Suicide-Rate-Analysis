@@ -46,7 +46,7 @@ shinyUI(fluidPage(
             ),
         tabPanel("Visualization",
                  sidebarLayout(
-                   sidebarPanel(selectInput("vis_year", "Year", choices = sort(data$year)),
+                   sidebarPanel(selectInput("vis_year", "Year", choices = as.integer(sort(data$year))),
                                 selectInput("vis_country","Country", choices = sort(data$country)),
                                 radioButtons("vis_gender","Sex", choices = c("male" , "female", "Both"))),
                    mainPanel(
@@ -70,7 +70,7 @@ shinyUI(fluidPage(
         ),tabPanel("Analysis",
                    sidebarLayout(
                      sidebarPanel(
-                       selectInput("country_for_analysis", "Country", choices = sort(data$country)),
+                       selectInput("country_for_analysis", "Country", choices = sort(data$country), selected = "Albania"),
                        sliderInput("input_range_analysis", "Year Range to be Displayed", 
                                    min = 1985, max = 2016, value = c(1996, 2005))
                      ), mainPanel(
