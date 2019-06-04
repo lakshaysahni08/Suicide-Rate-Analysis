@@ -59,7 +59,19 @@ shinyUI(fluidPage(
              )
              
     )
-      )
+      ),tabPanel("Analysis",
+                 sidebarLayout(
+                   sidebarPanel(
+                     selectInput("country_for_analysis", "Country", choices = sort(data$country)),
+                     sliderInput("input_range_analysis", "Year Range to be Displayed", 
+                                 min = 1985, max = 2016, value = c(1996, 2005))
+                   ), mainPanel(
+                     textOutput("analysis")
+                   )
+                 )
+                 
+                 )
+  
    )
  )
 )  

@@ -92,4 +92,13 @@ shinyServer(function(input, output) {
     plot_view
   })
   
+  output$analysis <- renderText({
+    analysis_data <- data %>% filter(input$country_for_analysis == country) %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% 
+      filter( input$input_range_analysis[1] <= year & input$input_range_analysis[2] >= year ) %>% select(suicides)
+    View(analysis_data)
+    print(analysis_data[[0]])
+    
+    paste0(analysis_data[[0]])
+  })
+  
 })
