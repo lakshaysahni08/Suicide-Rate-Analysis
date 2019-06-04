@@ -74,7 +74,8 @@ shinyUI(fluidPage(
                        sliderInput("input_range_analysis", "Year Range to be Displayed", 
                                    min = 1985, max = 2016, value = c(1996, 2005))
                      ), mainPanel(
-                       textOutput("analysis")
+                       textOutput("analysis"),
+                       splitLayout(cellWidths = c("50%","50%"), plotOutput("analysis_gdp"), plotOutput("analysis_suicides"))
                      )
                    )
                    

@@ -113,4 +113,30 @@ shinyServer(function(input, output) {
     text
   })
   
+  # graph in analysis that shows gdp line graph
+  output$analysis_gdp <- renderPlot({
+    gdp <- data %>% 
+      filter(input$country_for_analysis == country) %>% select(country, year, suicides_no, gdp_per_capita....) %>% 
+      group_by(country, year, gdp_per_capita....) %>% summarize(suicides = sum(suicides_no)) %>% 
+      filter( input$input_range_analysis[1] <= year & input$input_range_analysis[2] >= year )
+    
+    View(gdp)
+    
+    plot <- ggplot(gdp, aes(gdp$year, gdp$gdp_per_capita....)) + geom_line()
+    plot
+  })
+  
+  # graph in analysis that shows suicide number line graph
+  output$analysis_suicides <- renderPlot({
+    test <- data %>% filter(input$country_for_analysis == country) %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% 
+            filter( input$input_range_analysis[1] <= year & input$input_range_analysis[2] >= year )
+    
+    testing <- ggplot(test, aes(test$year, test$suicides)) + geom_line()
+    testing
+  })
+  
+  
+  
+  
+  
 })
