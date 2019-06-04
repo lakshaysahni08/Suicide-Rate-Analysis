@@ -12,11 +12,12 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(stringr)
-library(leaflet)
+library(shinythemes)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
     
+    theme = shinytheme("cerulean"),
     # Application title
     titlePanel("Suicide Rates In Various Countries"),
     
