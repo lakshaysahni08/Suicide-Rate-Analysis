@@ -61,7 +61,7 @@ shinyUI(fluidPage(
                    sidebarPanel(
                      selectInput("country_for_range", "Country", choices = sort(data$country)),
                      sliderInput("input_range", "Year Range to be Displayed", 
-                                 min = 1985, max = 2016, value = c(1996, 2005))),
+                                 min = 1985, max = 2016, value = c(1996, 2005),, sep = "")),
                      mainPanel(
                        plotOutput("lineg")
                    )
@@ -73,7 +73,7 @@ shinyUI(fluidPage(
                      sidebarPanel(
                        selectInput("country_for_analysis", "Country", choices = sort(data$country), selected = "Albania"),
                        sliderInput("input_range_analysis", "Year Range to be Displayed", 
-                                   min = 1985, max = 2016, value = c(1996, 2005))
+                                   min = 1985, max = 2016, value = c(1996, 2005), sep = "")
                      ), mainPanel(
                        textOutput("analysis"),
                        splitLayout(cellWidths = c("50%","50%"), plotOutput("analysis_gdp"), plotOutput("analysis_suicides")),
