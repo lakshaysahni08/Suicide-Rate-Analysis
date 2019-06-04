@@ -84,9 +84,9 @@ shinyServer(function(input, output) {
   
   # Line graph
   output$lineg <- renderPlot({
-    print(input$input_range)
     line_data <- data %>% 
-      filter(data$country == "Argentina") %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% filter( input$input_range[1] <= year & input$input_range[2] >= year )
+      filter(input$country_for_range == country) %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% 
+      filter( input$input_range[1] <= year & input$input_range[2] >= year )
    
     plot_view <- ggplot(data = line_data, aes(x = line_data$year, y = line_data$suicides)) + geom_line() + geom_point() 
     plot_view

@@ -50,6 +50,7 @@ shinyUI(fluidPage(
     tabPanel("Line Graph Visual", 
              sidebarLayout(
                sidebarPanel(
+                 selectInput("country_for_range", "Country", choices = sort(data$country)),
                  sliderInput("input_range", "Year Range to be Displayed", 
                              min = 1985, max = 2016, value = c(1996, 2005))),
                  mainPanel(
