@@ -144,12 +144,12 @@ shinyServer(function(input, output) {
   })
   
   output$About_us <- renderText({
-      HTML(paste("Suicide Rates 
+      HTML(paste("Suicide Rates",
 
 
- Project Description 
+ "Project Description", 
 
-  The data that we will be examining is Suicide rates around
+  "The data that we will be examining is Suicide rates around
 the world based upon various catagories such as GDP, age-range,
 and gender across different countries. This dataset
 was acquired from Kaggle which pulls data from the United
@@ -159,12 +159,12 @@ This is important for people to be able to analyze patterns
 and recognize specific danger areas that need help.
 Identifying troubling areas to send councillors and experts
 can help decrease suicide occurrences and possibly help
-communities grow. 
+communities grow.", 
 
 
- Expected Audience
+ "Expected Audience",
 
-  The target audience is adults and teenagers since the end goal is to spread awareness of mental health. 
+  "The target audience is adults and teenagers since the end goal is to spread awareness of mental health. 
 Mental health advocates and possibly doctors with the background in mental health would be able to
 target these zones and decrease the number of suicides;
 Teenagers should be more aware of the mental
@@ -172,30 +172,30 @@ health of their peers as well, so targeting this broad range
 would help increase the awareness in a school setting and a 
 public setting. Looking at different demographics across the
 world may give people ideas on how to treat mental health 
-universally.
+universally.",
 
- What Should People Learn From our Presentation?
+ "What Should People Learn From our Presentation?",
 
-  The audience should learn at least four key things about 
-our dataset:
+  "The audience should learn at least four key things about 
+our dataset:",
 
-1. The areas that are most impacted (countries) and whether these countries are third world, first world, or second world (Developed vs. undeveloped countries) - based upon GDP. Learning this, experts can improve health care in these areas based on what the area has.
-
-
-
-2.  The severity of people's mental health from differing age ranges and sex: experts will be able to see which areas have more or less suicides with the elderly or the young, men or women. In doing this, people will be able to create more programs for their countries or suggest a more international effort. 
+"1. The areas that are most impacted (countries) and whether these countries are third world, first world, or second world (Developed vs. undeveloped countries) - based upon GDP. Learning this, experts can improve health care in these areas based on what the area has.",
 
 
 
-3. Whether the more impacted countries are more developed or underdeveloped: in learning this, experts can try to pinpoint why and where suicides rates are higher in more specific countries or areas.
-
-
-4. Draw relationships/ trends or discover if there is a relationship between GDP and sex with suicide rates across a span from 1985 - 2016.'
+"2.  The severity of people's mental health from differing age ranges and sex: experts will be able to see which areas have more or less suicides with the elderly or the young, men or women. In doing this, people will be able to create more programs for their countries or suggest a more international effort.", 
 
 
 
-  Presented by
-Kevin Ko, Lakshay Sahni, Ethan Tong"))
+"3. Whether the more impacted countries are more developed or underdeveloped: in learning this, experts can try to pinpoint why and where suicides rates are higher in more specific countries or areas.",
+
+
+"4. Draw relationships/ trends or discover if there is a relationship between GDP and sex with suicide rates across a span from 1985 - 2016.",
+
+
+
+  "Presented by
+Kevin Ko, Lakshay Sahni, Ethan Tong", sep = "\n"))
   })
   
 })
