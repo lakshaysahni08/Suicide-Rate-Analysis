@@ -20,7 +20,24 @@ data <- read.csv("data/master.csv", fileEncoding="UTF-8-BOM", stringsAsFactors =
 # Define server 
 shinyServer(function(input, output) {
    
- 
+  ####################################################################
+  # Introduction page and title 
+  output$introduction_title <- renderText({
+    intro <- paste0("An Introduction to Our Findings, Our Purpose, and Our Goal")
+  })
+  output$introduction <- renderText({
+    text <- paste("In the world today, the problem of suicide and its continuously rising rate throughout the years have raised
+                  quite a significant amount of questions and concerns. In this application, we want you to be able to examine 
+                  the suicide rates in your own country (given that there is recorded data). We want you to be able to see that 
+                  in the progression of years or in a span of, for example, 5 years, what the suicide rates looked like and how 
+                  it has either decreased or increased. We want you to become aware and realize which age groups are most susceptible 
+                  and vulnerable to suicide. We want you to see the correlation of GDP and suicide rates in general. Although we 
+                  do not provide the most precise and narrow statistics and numbers to show if there is a relationship in these 
+                  examinations, we present our findings in the form that you can come and see some general trends and data 
+                  findings.")
+  })
+  
+  # Data table
   output$table <- renderDataTable({
     # Warning messages for user to see if no values selected
     validate(
@@ -44,7 +61,7 @@ shinyServer(function(input, output) {
   output$barg <- renderPlot({
     
     # the user selects both in the input gender widget then display bar graph with data containing both sexes
-    if ( input$input_gender == "Both") {
+    if ( input$vis_gender == "Both") {
       both_case <- data %>% filter(input$vis_year == year, input$vis_country == country)
       
       # Error message that there is no data available (data for graph is empty)
@@ -54,7 +71,8 @@ shinyServer(function(input, output) {
       
       # bar graph with ggplot 
       output <- ggplot(both_case, aes(both_case$age, both_case$suicides_no, fill = both_case$sex)) + geom_bar(stat="identity", position ="dodge") +
-        scale_fill_brewer(palette = "Set1")
+        scale_fill_brewer(palette = "Set1") + labs(title = " A Look into Suicide numbers for each Age Group for both genders") + 
+        xlab("Age Groups") + ylab("Number of Suicides")
       output
       
     } else {
@@ -89,13 +107,25 @@ shinyServer(function(input, output) {
       filter(input$country_for_range == country) %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% 
       filter( input$input_range[1] <= year & input$input_range[2] >= year )
    
-    plot_view <- ggplot(data = line_data, aes(x = line_data$year, y = line_data$suicides)) + geom_line() + geom_point() 
+    validate(
+      need(nrow(line_data) > 1 , "Please select country.")
+    )
+    
+    
+    plot_view <- ggplot(data = line_data, aes(x = line_data$year, y = line_data$suicides)) + geom_line() + geom_point() +
+                 labs(title = "A Simple Look at the Suicide Numbers in each Progressing Year") + xlab("Year") + ylab("Number of Suicides")
     plot_view
   })
   
   output$analysis <- renderText({
     analysis_data <- data %>% filter(input$country_for_analysis == country) %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% 
       filter( input$input_range_analysis[1] <= year & input$input_range_analysis[2] >= year ) %>% select(suicides)
+    
+    # Message to display if nothing selected
+    validate(
+      need(nrow(analysis_data) > 1, message = "Please select a country to analyze and look at.")  
+    )
+    
     old <- as.integer(analysis_data[1,1])
     new <- as.integer(analysis_data[nrow(analysis_data),1])
     change <- new - old
@@ -121,9 +151,12 @@ shinyServer(function(input, output) {
       group_by(country, year, gdp_per_capita....) %>% summarize(suicides = sum(suicides_no)) %>% 
       filter( input$input_range_analysis[1] <= year & input$input_range_analysis[2] >= year )
     
-    View(gdp)
+    validate(
+      need(nrow(gdp) > 1, "Please select a country.")
+    )
     
-    plot <- ggplot(gdp, aes(gdp$year, gdp$gdp_per_capita....)) + geom_line()
+    plot <- ggplot(gdp, aes(gdp$year, gdp$gdp_per_capita....)) + geom_line() + labs(title = "A View of GDP-per-capita in each year of the Selected Nation") +
+            xlab("Year") + ylab("GDP-per-capita")
     plot
   })
   
@@ -132,70 +165,90 @@ shinyServer(function(input, output) {
     test <- data %>% filter(input$country_for_analysis == country) %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% 
             filter( input$input_range_analysis[1] <= year & input$input_range_analysis[2] >= year )
     
-    testing <- ggplot(test, aes(test$year, test$suicides)) + geom_line()
+    validate(
+      need(nrow(test) > 1 , "Please select a country.")
+    )
+    
+    testing <- ggplot(test, aes(test$year, test$suicides)) + geom_line() + labs(title = "A View of total suicide numbers for each year in the selected Country") +
+               xlab("Year") + ylab("Total number of suicides")
     testing
   })
   
+  # pie chart in analysis page
   output$pie_analysis <- renderPlotly({
     test2 <- data %>% filter(input$country_for_analysis == country, input$analysis_for_year == year, input$analysis_for_sex == sex)
     value <- test2[,5]
-    p <- plot_ly(test2, labels = test2$age , values = value, type = 'pie') 
+    p <- plot_ly(test2, labels = test2$age , values = value, type = 'pie') %>% layout(title = 'Percentage of Each Age Group in Comparison with Suicide Numbers') 
     p
   })
   
-  output$About_us <- renderText({
-      HTML(paste("Suicide Rates",
-
-
- "Project Description", 
-
-  "The data that we will be examining is Suicide rates around
-the world based upon various catagories such as GDP, age-range,
-and gender across different countries. This dataset
-was acquired from Kaggle which pulls data from the United
-Nations, The World Bank, World Health Organization, and a
-notebook that contains records of suicides across the world.
-This is important for people to be able to analyze patterns
-and recognize specific danger areas that need help.
-Identifying troubling areas to send councillors and experts
-can help decrease suicide occurrences and possibly help
-communities grow.", 
-
-
- "Expected Audience",
-
-  "The target audience is adults and teenagers since the end goal is to spread awareness of mental health. 
-Mental health advocates and possibly doctors with the background in mental health would be able to
-target these zones and decrease the number of suicides;
-Teenagers should be more aware of the mental
-health of their peers as well, so targeting this broad range
-would help increase the awareness in a school setting and a 
-public setting. Looking at different demographics across the
-world may give people ideas on how to treat mental health 
-universally.",
-
- "What Should People Learn From our Presentation?",
+  # ANALYSIS EXPLANATIONS 
+  output$analysis_introduction <- renderText({
+    text <- paste("ANALYSIS: Given the information from the user-selected COUNTRY and the given range of YEARS, we are able to calculate that : ")
+  })
+  
+  # ANALYSIS EXPLANATIONS
+  output$analysis_gdp_explanation <- renderText({ 
+    text <- paste("Given the information of the selected country and the year, the graphs below show the GDP in the specific range of years and
+                  the graph of the number of suicides with the same range of years. With the side-by-side graphical visual representation, we can 
+                  see that for most of the countries, with higher GDP, comes with also a higher number of suicides. This then, can lead to future
+                  investigations of other factors such as: economics, healthcare, support, wages, etc...")
+  })
  
-  "The audience should learn at least four key things about 
-our dataset:",
-
-"1. The areas that are most impacted (countries) and whether these countries are third world, first world, or second world (Developed vs. undeveloped countries) - based upon GDP. Learning this, experts can improve health care in these areas based on what the area has.",
-
-
-
-"2.  The severity of people's mental health from differing age ranges and sex: experts will be able to see which areas have more or less suicides with the elderly or the young, men or women. In doing this, people will be able to create more programs for their countries or suggest a more international effort.", 
-
-
-
-"3. Whether the more impacted countries are more developed or underdeveloped: in learning this, experts can try to pinpoint why and where suicides rates are higher in more specific countries or areas.",
-
-
-"4. Draw relationships/ trends or discover if there is a relationship between GDP and sex with suicide rates across a span from 1985 - 2016.",
-
-
-
-  "Presented by
-Kevin Ko, Lakshay Sahni, Ethan Tong", sep = "\n"))
+  # ANALYSIS EXPLANATIONS
+  output$analysis_one_year_input <- renderText({
+    text <- paste("The following analysis enables you to view the percentage of each age group that contributes to the suicide rate given the selected
+                  country. Please select a specific year and gender in the dropdown menus to view the information. ** Data make take a moment to load.")
+  })
+  
+  #################################################################################################
+  # Project description section in about us page
+  output$project_descr_title <- renderText({
+    title <- paste("Project Description:")
+  })
+  output$project_description <- renderText({
+      project_description <- paste("The data that we will be examining is Suicide rates around
+                                    the world based upon various catagories such as GDP, age-range,
+                                    and gender across different countries. This dataset
+                                    was acquired from Kaggle which pulls data from the United
+                                    Nations, The World Bank, World Health Organization, and a
+                                    notebook that contains records of suicides across the world.
+                                    This is important for people to be able to analyze patterns
+                                    and recognize specific danger areas that need help.
+                                    Identifying troubling areas to send councillors and experts
+                                    can help decrease suicide occurrences and possibly help
+                                    communities grow.")
+  })
+  
+  ##################################################################################################
+  # Audience Section for about us page
+  output$audience_title <- renderText({
+    title <- paste("Audience Intended:")
+  })
+  output$audience <- renderText({
+    expected_audience <- paste( "The target audience is adults and teenagers since the end goal is to spread awareness of mental health. 
+                                 Mental health advocates and possibly doctors with the background in mental health would be able to
+                                 target these zones and decrease the number of suicides;
+                                 Teenagers should be more aware of the mental
+                                 health of their peers as well, so targeting this broad range
+                                 would help increase the awareness in a school setting and a 
+                                 public setting. Looking at different demographics across the
+                                 world may give people ideas on how to treat mental health 
+                                 universally.")
+  })
+  
+  #################################################################################################
+  # Takeaway section for about us page
+  output$takeaway_title <- renderText({
+    title <- paste("Takeaways")
+  })  
+   output$takeaway <- renderUI({
+      HTML(paste( "The audience should learn at least four key things about our dataset:", 
+                  "1.) Examine the country's data concerning the number of suicides",
+                  "2.) Examine and observe the suicide numbers in each given age group for that country",
+                  "3.) Identify trends in a line graph that shows the total suicide rates for selected years",
+                  "4.) Draw conclusions based on gdp comparisons, age comparisons, gender comparisons, and percent increase/decrease in the 
+                  number of suicides",sep="<br/>"))
   })
   
 })

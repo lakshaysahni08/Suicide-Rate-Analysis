@@ -20,16 +20,20 @@ shinyUI(fluidPage(
     
     theme = shinytheme("cerulean"),
     # Application title
-    titlePanel("Suicide Rates In Various Countries"),
-    
     # Sidebar with a slider input for number of bins 
-    navbarPage("Menu",
+    navbarPage("Suicide Rates in Various Countries",
     
                  tabPanel("Home", 
-              
-                                    img(src = "https://edenvaleinn.com/wp-content/uploads/2018/10/folsom-train-ride-1500x609.jpg")
-                         
-                        ),
+                    textOutput("introduction_title"),
+                    textOutput("introduction"), 
+                    tags$head(tags$style("#introduction_title{
+                                         color:#00BFFF;
+                                         font-size: 40px; 
+                                         text-align: center;}
+                                         #introduction{
+                                          text-align: justify
+                                         }"))
+                 ),
       navbarMenu("Information",  
         
         tabPanel("Table",
@@ -61,22 +65,25 @@ shinyUI(fluidPage(
                    sidebarPanel(
                      selectInput("country_for_range", "Country", choices = sort(data$country)),
                      sliderInput("input_range", "Year Range to be Displayed", 
-                                 min = 1985, max = 2016, value = c(1996, 2005),, sep = "")),
+                                 min = 1985, max = 2016, value = c(1996, 2005), sep = "")),
                      mainPanel(
                        plotOutput("lineg")
                    )
                )
                
-      )
-        ),tabPanel("Analysis",
+        )
+      ),tabPanel("Analysis",
                    sidebarLayout(
                      sidebarPanel(
                        selectInput("country_for_analysis", "Country", choices = sort(data$country), selected = "Albania"),
                        sliderInput("input_range_analysis", "Year Range to be Displayed", 
                                    min = 1985, max = 2016, value = c(1996, 2005), sep = "")
                      ), mainPanel(
+                       textOutput("analysis_introduction"),
                        textOutput("analysis"),
+                       textOutput("analysis_gdp_explanation"),
                        splitLayout(cellWidths = c("50%","50%"), plotOutput("analysis_gdp"), plotOutput("analysis_suicides")),
+                       textOutput("analysis_one_year_input"), 
                        selectInput("analysis_for_year", "Select One Specific Year", choices = sort(data$year)),
                        selectInput("analysis_for_sex", "Select Sex", choices = unique(data$sex)),
                        #splitLayout(cellWidths = c("50%","50%"), selectInput("analysis_for_year"),selectInput("analysis_for_sex")),
@@ -84,13 +91,27 @@ shinyUI(fluidPage(
                      )
                    )
         ),tabPanel("About Us",
-                   textOutput("About_us"),
+                   textOutput("project_descr_title"),
+                   textOutput("project_description"),
+                   textOutput("audience_title"),
+                   textOutput("audience"), 
+                   textOutput("takeaway_title"),
+                   uiOutput("takeaway"),
+                   
+                   tags$head(tags$style("#project_descr_title{
+                                          color: 	#00BFFF;
+                                          font-size: 20px}
+                                         #audience_title{
+                                          color:	#00BFFF; 
+                                          font-size: 20px}
+                                         #takeaway_title{
+                                          color: 	#00BFFF; 
+                                          font-size: 20px}")), 
+                   
                    img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62124086_446626162786376_1588243610019561472_n.jpg?_nc_cat=101&_nc_oc=AQnOxRD0-nQ0lQx1pMxyPN6yCE3zQTPJuIK5mIP_Z4ZQ_hj4VdjqGaerF07A8jsoKTQ&_nc_ht=scontent-sea1-1.xx&oh=0b496315de07a536dfdc41a303807150&oe=5D8333AB", height = 325, Width = 300),
                    img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62020322_2417304411667550_3683994252385189888_n.jpg?_nc_cat=105&_nc_oc=AQmB7eCHoKP6_KZ8LJiN2yrY96RbYmoQi2dYdVeGzea2A_XZkYZvfO3bK307Fj8uA7E&_nc_ht=scontent-sea1-1.xx&oh=87a2c3e498c59189f2089d71e7931b82&oe=5D884131", height = 325, Width = 300),
                    img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62145612_425100261646368_780859242352476160_n.jpg?_nc_cat=111&_nc_oc=AQmW21WPpLMbGBLIEBMsXGLGuckcrKL7Wgpv0PM6mA5u1WAiWSsUeqr5x6qMaMlsJt4&_nc_ht=scontent-sea1-1.xx&oh=715111887b0dd56e8effd785a6f95d38&oe=5D920832", height = 325, Width = 300)
-                   
       )
-    
    )
   )  
 )
