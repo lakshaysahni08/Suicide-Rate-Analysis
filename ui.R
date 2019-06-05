@@ -15,6 +15,8 @@ library(plotly)
 library(stringr)
 library(shinythemes)
 
+data <- read.csv("data/master.csv", fileEncoding="UTF-8-BOM", stringsAsFactors = FALSE)
+
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
     
@@ -106,11 +108,12 @@ shinyUI(fluidPage(
                                           font-size: 20px}
                                          #takeaway_title{
                                           color: 	#00BFFF; 
-                                          font-size: 20px}")), 
-                   
-                   img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62124086_446626162786376_1588243610019561472_n.jpg?_nc_cat=101&_nc_oc=AQnOxRD0-nQ0lQx1pMxyPN6yCE3zQTPJuIK5mIP_Z4ZQ_hj4VdjqGaerF07A8jsoKTQ&_nc_ht=scontent-sea1-1.xx&oh=0b496315de07a536dfdc41a303807150&oe=5D8333AB", height = 325, Width = 300),
-                   img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62020322_2417304411667550_3683994252385189888_n.jpg?_nc_cat=105&_nc_oc=AQmB7eCHoKP6_KZ8LJiN2yrY96RbYmoQi2dYdVeGzea2A_XZkYZvfO3bK307Fj8uA7E&_nc_ht=scontent-sea1-1.xx&oh=87a2c3e498c59189f2089d71e7931b82&oe=5D884131", height = 325, Width = 300),
-                   img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62145612_425100261646368_780859242352476160_n.jpg?_nc_cat=111&_nc_oc=AQmW21WPpLMbGBLIEBMsXGLGuckcrKL7Wgpv0PM6mA5u1WAiWSsUeqr5x6qMaMlsJt4&_nc_ht=scontent-sea1-1.xx&oh=715111887b0dd56e8effd785a6f95d38&oe=5D920832", height = 325, Width = 300)
+                                          font-size: 20px}"))
+                   # , 
+                   # 
+                   # img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62124086_446626162786376_1588243610019561472_n.jpg?_nc_cat=101&_nc_oc=AQnOxRD0-nQ0lQx1pMxyPN6yCE3zQTPJuIK5mIP_Z4ZQ_hj4VdjqGaerF07A8jsoKTQ&_nc_ht=scontent-sea1-1.xx&oh=0b496315de07a536dfdc41a303807150&oe=5D8333AB", height = 325, Width = 300),
+                   # img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62020322_2417304411667550_3683994252385189888_n.jpg?_nc_cat=105&_nc_oc=AQmB7eCHoKP6_KZ8LJiN2yrY96RbYmoQi2dYdVeGzea2A_XZkYZvfO3bK307Fj8uA7E&_nc_ht=scontent-sea1-1.xx&oh=87a2c3e498c59189f2089d71e7931b82&oe=5D884131", height = 325, Width = 300),
+                   # img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62145612_425100261646368_780859242352476160_n.jpg?_nc_cat=111&_nc_oc=AQmW21WPpLMbGBLIEBMsXGLGuckcrKL7Wgpv0PM6mA5u1WAiWSsUeqr5x6qMaMlsJt4&_nc_ht=scontent-sea1-1.xx&oh=715111887b0dd56e8effd785a6f95d38&oe=5D920832", height = 325, Width = 300)
       )
    )
   )  

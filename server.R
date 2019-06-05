@@ -18,6 +18,7 @@ library(plotly)
 # Data read and organized to be readable in good format
 data <- read.csv("data/master.csv", fileEncoding="UTF-8-BOM", stringsAsFactors = FALSE)
 # Define server 
+
 shinyServer(function(input, output) {
    
   ####################################################################
