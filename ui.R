@@ -81,6 +81,7 @@ shinyUI(fluidPage(
                        sliderInput("input_range_analysis", "Year Range to be Displayed", 
                                    min = 1985, max = 2016, value = c(1996, 2005), sep = "")
                      ), mainPanel(
+                       textOutput("analysis_title"),
                        textOutput("analysis_introduction"),
                        textOutput("analysis"),
                        textOutput("analysis_gdp_explanation"),
@@ -89,7 +90,12 @@ shinyUI(fluidPage(
                        selectInput("analysis_for_year", "Select One Specific Year", choices = sort(data$year)),
                        selectInput("analysis_for_sex", "Select Sex", choices = unique(data$sex)),
                        #splitLayout(cellWidths = c("50%","50%"), selectInput("analysis_for_year"),selectInput("analysis_for_sex")),
-                       plotlyOutput("pie_analysis")
+                       plotlyOutput("pie_analysis"),
+                       
+                       tags$head(tags$style("#analysis_title{
+                                              color: #00BFFF; 
+                                              font-size: 20px
+                                            }"))
                      )
                    )
         ),tabPanel("About Us",
@@ -99,6 +105,13 @@ shinyUI(fluidPage(
                    textOutput("audience"), 
                    textOutput("takeaway_title"),
                    uiOutput("takeaway"),
+                   textOutput("group"),
+                   textOutput("kevin_title"),
+                   textOutput("kevin"), 
+                   textOutput("lakshay_title"),
+                   textOutput("lakshay"), 
+                   textOutput("ethan_title"), 
+                   textOutput("ethan"),
                    
                    tags$head(tags$style("#project_descr_title{
                                           color: 	#00BFFF;
@@ -108,7 +121,16 @@ shinyUI(fluidPage(
                                           font-size: 20px}
                                          #takeaway_title{
                                           color: 	#00BFFF; 
-                                          font-size: 20px}"))
+                                          font-size: 20px}
+                                         #group{
+                                          color: #00BFFF;
+                                          font-size: 20px}
+                                         #kevin_title{
+                                          font-size: 15px}
+                                         #lakshay_title{
+                                          font-size: 15px}
+                                         #ethan_title{
+                                          font-size: 15px}"))
                    # , 
                    # 
                    # img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62124086_446626162786376_1588243610019561472_n.jpg?_nc_cat=101&_nc_oc=AQnOxRD0-nQ0lQx1pMxyPN6yCE3zQTPJuIK5mIP_Z4ZQ_hj4VdjqGaerF07A8jsoKTQ&_nc_ht=scontent-sea1-1.xx&oh=0b496315de07a536dfdc41a303807150&oe=5D8333AB", height = 325, Width = 300),

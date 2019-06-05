@@ -183,9 +183,13 @@ shinyServer(function(input, output) {
     p
   })
   
+  # ANALYSIS TITLE 
+  output$analysis_title <- renderText({
+    text <- paste("Analysis")
+  })
   # ANALYSIS EXPLANATIONS 
   output$analysis_introduction <- renderText({
-    text <- paste("ANALYSIS: Given the information from the user-selected COUNTRY and the given range of YEARS, we are able to calculate that : ")
+    text <- paste("Given the information from the user-selected COUNTRY and the given range of YEARS, we are able to calculate that : ")
   })
   
   # ANALYSIS EXPLANATIONS
@@ -250,6 +254,33 @@ shinyServer(function(input, output) {
                   "3.) Identify trends in a line graph that shows the total suicide rates for selected years",
                   "4.) Draw conclusions based on gdp comparisons, age comparisons, gender comparisons, and percent increase/decrease in the 
                   number of suicides",sep="<br/>"))
+  })
+   
+  ##################################################################################################
+  # About US // group members 
+  output$group <- renderText({
+    title <- paste("A Little Information About Us")
+  })
+   
+  output$kevin_title <- renderText({
+    paste("Kevin")
+  })
+  output$kevin <- renderText({ 
+   bio <- paste("A freshman looking for a major. :)")
+  })
+  
+  output$lakshay_title <- renderText({
+    paste("Lakshay")
+  })
+  output$lakshay <- renderText({
+    bio <- paste("A cool dude.")
+  })
+  
+  output$ethan_title <- renderText({
+    paste("Ethan")
+  })
+  output$ethan <- renderText({
+    bio <- paste("A sophomore in Informatics.")
   })
   
 })
