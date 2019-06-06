@@ -112,6 +112,8 @@ shinyUI(fluidPage(
                    textOutput("ethan"),
                    textOutput("Source_Title"),
                    uiOutput("Source_link"),
+                   textOutput("code"),
+                   uiOutput("codelink"),
                    
                    tags$head(tags$style("#project_descr_title{color: 	#00BFFF;font-size: 20px}
                                          #audience_title{color:	#00BFFF; font-size: 20px}
@@ -121,7 +123,8 @@ shinyUI(fluidPage(
                                          #lakshay_title{font-size: 20px}
                                          #ethan_title{ font-size: 20px}
                                          #Source_Title{ color:#00BFFF;font-size: 20px; text-align: left;}
-                                         #Source_link{ text-align: justify; font-size: 15px;}"))
+                                         #Source_link{ text-align: justify; font-size: 15px;}
+                                         #code{ color : #00BFFF; font-size: 20px}"))
                 
       )
    )

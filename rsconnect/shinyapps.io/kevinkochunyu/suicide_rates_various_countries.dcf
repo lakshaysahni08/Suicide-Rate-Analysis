@@ -5,9 +5,9 @@ account: kevinkochunyu
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 966633
-bundleId: 2134753
+bundleId: 2134889
 url: https://kevinkochunyu.shinyapps.io/suicide_rates_various_countries/
-when: 1559796951.6577
+when: 1559802860.38869
 asMultiple: FALSE
 asStatic: FALSE
 ignoredFiles: .RData|README.md

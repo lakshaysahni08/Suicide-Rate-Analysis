@@ -322,5 +322,16 @@ shinyServer(function(input, output) {
     tagList(url)
   })
   
+  output$code <- renderText({
+    text <- paste("Code on GitHub")
+  })
+  
+  output$codelink <- renderUI({
+    url <- a("GITHUB REPOSITORY LINK", href = "https://github.com/info201b-sp2019/suicide_rate_analysis")
+    tagList(url)
+    
+  })
+  
+  
 })
 
