@@ -29,26 +29,8 @@ shinyUI(fluidPage(
                     textOutput("introduction_title"),
                     textOutput("introduction"), 
                     HTML('<center><img src="http://www.unityofwaco.org/sites/unityofwaco.org/files/styles/slider/public/DiscoverUnity1_rotor.jpg?itok=G4V2AtHB" width="800"></center>'),
-                    tags$head(tags$style("#introduction_title{
-                                         color:#00BFFF;
-                                         font-size: 20px; 
-                                         text-align: center;}
-                                         #introduction{
-                                          text-align: justify;
-                                          font-size: 15px;
-                                         }
-                                         ")),
-                    textOutput("Source_Title"),
-                    uiOutput("Source_link"),
-                    tags$head(tags$style("#Source_Title{
-                                         color:#00BFFF;
-                                         font-size: 20px; 
-                                         text-align: left;}
-                                         #Source_link{
-                                          text-align: justify;
-                                          font-size: 15px;
-                                         }
-                                         "))
+                    tags$head(tags$style("#introduction_title{ color:#00BFFF; font-size: 20px; text-align: center;}
+                                          #introduction{text-align: justify;font-size: 15px;}"))
                  ),
       navbarMenu("Information",  
         
@@ -60,7 +42,9 @@ shinyUI(fluidPage(
               radioButtons("input_gender","Sex", choices = c("Male" , "Female", "Both")),
               selectInput("input_age","Age Group", choices = sort(data$age))
             ), mainPanel(
-              dataTableOutput("table")
+              textOutput("table_text"),
+              dataTableOutput("table"),
+              tags$head(tags$style("#table_text{color:#00BFFF; font-size:20px}"))
             )
     
               )
@@ -71,8 +55,10 @@ shinyUI(fluidPage(
                                 selectInput("vis_country","Country", choices = sort(data$country)),
                                 radioButtons("vis_gender","Sex", choices = c("Male" , "Female", "Both"))),
                    mainPanel(
+                                  textOutput("bar_title"),
                                   plotOutput("barg"),
-                                  textOutput("bar_explanation")
+                                  textOutput("bar_explanation"),
+                                  tags$head(tags$style("#bar_title{color: #00BFFF; font-size: 20px}"))
                   )
                  )
                  ),
@@ -83,7 +69,9 @@ shinyUI(fluidPage(
                      sliderInput("input_range", "Year Range to be Displayed", 
                                  min = 1985, max = 2016, value = c(1996, 2005), sep = "")),
                      mainPanel(
-                       plotOutput("lineg")
+                       textOutput("lineg_title"),
+                       plotOutput("lineg"),
+                       tags$head(tags$style("#lineg_title{ color: #00BFFF; font-size: 20px}"))
                    )
                )
                
@@ -103,13 +91,9 @@ shinyUI(fluidPage(
                        textOutput("analysis_one_year_input"), 
                        selectInput("analysis_for_year", "Select One Specific Year", choices = sort(data$year)),
                        selectInput("analysis_for_sex", "Select Sex", choices = unique(data$sex)),
-                       #splitLayout(cellWidths = c("50%","50%"), selectInput("analysis_for_year"),selectInput("analysis_for_sex")),
                        plotlyOutput("pie_analysis"),
                        
-                       tags$head(tags$style("#analysis_title{
-                                              color: #00BFFF; 
-                                              font-size: 20px
-                                            }"))
+                       tags$head(tags$style("#analysis_title{ color: #00BFFF; font-size: 20px}"))
                      )
                    )
         ),tabPanel("About Us",
@@ -126,34 +110,19 @@ shinyUI(fluidPage(
                    textOutput("lakshay"), 
                    textOutput("ethan_title"), 
                    textOutput("ethan"),
-                   textOutput("work_cite_title"),
+                   textOutput("Source_Title"),
+                   uiOutput("Source_link"),
                    
-                   tags$head(tags$style("#project_descr_title{
-                                          color: 	#00BFFF;
-                                          font-size: 20px}
-                                         #audience_title{
-                                          color:	#00BFFF; 
-                                          font-size: 20px}
-                                         #takeaway_title{
-                                          color: 	#00BFFF; 
-                                          font-size: 20px}
-                                         #group{
-                                          color: #00BFFF;
-                                          font-size: 20px}
-                                         #kevin_title{
-                                          font-size: 20px}
-                                         #lakshay_title{
-                                          font-size: 20px}
-                                         #ethan_title{
-                                          font-size: 20px}
-                                         #work_cite_title{
-                                          color: #00BFFF;
-                                          font-size: 20px}"))
-                   # , 
-                   # 
-                   # img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62124086_446626162786376_1588243610019561472_n.jpg?_nc_cat=101&_nc_oc=AQnOxRD0-nQ0lQx1pMxyPN6yCE3zQTPJuIK5mIP_Z4ZQ_hj4VdjqGaerF07A8jsoKTQ&_nc_ht=scontent-sea1-1.xx&oh=0b496315de07a536dfdc41a303807150&oe=5D8333AB", height = 325, Width = 300),
-                   # img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62020322_2417304411667550_3683994252385189888_n.jpg?_nc_cat=105&_nc_oc=AQmB7eCHoKP6_KZ8LJiN2yrY96RbYmoQi2dYdVeGzea2A_XZkYZvfO3bK307Fj8uA7E&_nc_ht=scontent-sea1-1.xx&oh=87a2c3e498c59189f2089d71e7931b82&oe=5D884131", height = 325, Width = 300),
-                   # img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62145612_425100261646368_780859242352476160_n.jpg?_nc_cat=111&_nc_oc=AQmW21WPpLMbGBLIEBMsXGLGuckcrKL7Wgpv0PM6mA5u1WAiWSsUeqr5x6qMaMlsJt4&_nc_ht=scontent-sea1-1.xx&oh=715111887b0dd56e8effd785a6f95d38&oe=5D920832", height = 325, Width = 300)
+                   tags$head(tags$style("#project_descr_title{color: 	#00BFFF;font-size: 20px}
+                                         #audience_title{color:	#00BFFF; font-size: 20px}
+                                         #takeaway_title{color: 	#00BFFF; font-size: 20px}
+                                         #group{ color: #00BFFF; font-size: 20px}
+                                         #kevin_title{font-size: 20px}
+                                         #lakshay_title{font-size: 20px}
+                                         #ethan_title{ font-size: 20px}
+                                         #Source_Title{ color:#00BFFF;font-size: 20px; text-align: left;}
+                                         #Source_link{ text-align: justify; font-size: 15px;}"))
+                
       )
    )
   )  

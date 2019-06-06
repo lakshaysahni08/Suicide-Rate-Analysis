@@ -35,19 +35,18 @@ shinyServer(function(input, output) {
                   and vulnerable to suicide. We want you to see the correlation of GDP and suicide rates in general. Although we 
                   do not provide the most precise and narrow statistics and numbers to show if there is a relationship in these 
                   examinations, we present our findings in the form that you can come and see some general trends and data 
-                  findings.")
-    })
-    output$Source_Title <- renderText({
-        text <- paste0("Source Used: ")
-    })
-    
-    output$Source_link <- renderUI({
-        url <- a("Suicide Information", href ="https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016")
-        tagList(url)
+                  findings. This dataset was acquired from Kaggle, created by a user called - Rusty, which pulls data from the United Nations, 
+                  The World Bank, World Health Organization, and a notebook that contains records of suicides across the world. The link
+                  for the dataset is available at the About Us page in this application.")
     })
   
+  #====================================================================================#
+   #### INFORMATION TAB ####
+   # Data table and text 
+  output$table_text <- renderText({
+    text <- paste("A Look Into Our Dataset, specified just for your choosings.")
+  })
   
-  # Data table
   output$table <- renderDataTable({
     # Warning messages for user to see if no values selected
     validate(
@@ -68,6 +67,9 @@ shinyServer(function(input, output) {
   })
   
   # Bar graph for showing relationship between age group and number of suicide
+  output$bar_title <- renderText({
+    explanation <- paste0("What is the most vulnerable age group in ", input$vis_year, " in ", input$vis_country, "?")
+  })
   output$barg <- renderPlot({
     
     # the user selects both in the input gender widget then display bar graph with data containing both sexes
@@ -112,6 +114,10 @@ shinyServer(function(input, output) {
   )
   
   # Line graph
+  output$lineg_title <- renderText({
+    explanation <- paste0("Is there an increase or decrease of total suicide numbers across the years?")
+  })
+  
   output$lineg <- renderPlot({
     line_data <- data %>% 
       filter(input$country_for_range == country) %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% 
@@ -126,7 +132,10 @@ shinyServer(function(input, output) {
                  labs(title = "A Simple Look at the Suicide Numbers in each Progressing Year") + xlab("Year") + ylab("Number of Suicides")
     plot_view
   })
+  #=====================================================================# 
   
+  #---------------------------------------------------------------------#
+   #### ANALYSIS TAB #### 
   output$analysis <- renderText({
     analysis_data <- data %>% filter(input$country_for_analysis == country) %>% group_by(year) %>% summarize(suicides = sum(suicides_no)) %>% 
       filter( input$input_range_analysis[1] <= year & input$input_range_analysis[2] >= year ) %>% select(suicides)
@@ -210,8 +219,15 @@ shinyServer(function(input, output) {
   output$analysis_gdp_explanation <- renderText({ 
     text <- paste("Given the information of the selected country and the year, the graphs below show the GDP in the specific range of years and
                   the graph of the number of suicides with the same range of years. With the side-by-side graphical visual representation, we can 
-                  see that for most of the countries, with higher GDP, comes with also a higher number of suicides. This then, can lead to future
-                  investigations of other factors such as: economics, healthcare, support, wages, etc...")
+                  see that for most of the countries, with higher gradual growing GDP, comes with also a higher number of suicides. This then, can lead to future
+                  investigations of other factors such as: economics, healthcare, support, wages, etc... Our analysis shows a potential relationship
+                  of GDP increase or decrease in relation to suicide rates. Another trend in which we see is that a sudden spike of decrease 
+                  in GDP also result in a high increase of suicide numbers - 1995-2005 Argentina. Likewise, a sudden burst of increase in GDP, may
+                  result in a big decrease in suicide rates - 2002 - 2005 Australia. This suggests that when a nation suffers 
+                  economically, the people also are more prone to suicide. From these observations, we can also reach to a conclusion that countries
+                  with a gradual growth results in the gradual growth in both factors, whereas countries with sudden drops or spikes may result 
+                  in one factor being increased and the other decreased. GDP is not the lone factor that determines suicide rates, but from this 
+                  analysis we can observe that there may be some significant relation between the two.")
   })
  
   # ANALYSIS EXPLANATIONS
@@ -297,8 +313,13 @@ shinyServer(function(input, output) {
     bio <- paste("A sophomore in Informatics.")
   })
   
-  output$work_cite_title <- renderText({
-    title <- paste("Works Cited")
+  output$Source_Title <- renderText({
+    text <- paste0("Source Used: ")
+  })
+  
+  output$Source_link <- renderUI({
+    url <- a("Suicide Information", href ="https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016")
+    tagList(url)
   })
   
 })
