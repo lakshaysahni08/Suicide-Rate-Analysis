@@ -21,6 +21,7 @@ Identifying troubling areas to send councillors and experts
 can help decrease suicide occurrences and possibly help
 communities grow. 
 
+APP Link : https://kevinkochunyu.shinyapps.io/suicide_rates_various_countries/
 
 # Expected Audience 
 
