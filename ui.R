@@ -28,22 +28,25 @@ shinyUI(fluidPage(
                  tabPanel("Home", 
                     textOutput("introduction_title"),
                     textOutput("introduction"), 
+                    HTML('<center><img src="http://www.unityofwaco.org/sites/unityofwaco.org/files/styles/slider/public/DiscoverUnity1_rotor.jpg?itok=G4V2AtHB" width="800"></center>'),
                     tags$head(tags$style("#introduction_title{
                                          color:#00BFFF;
-                                         font-size: 40px; 
+                                         font-size: 20px; 
                                          text-align: center;}
                                          #introduction{
-                                          text-align: justify
-                                         }"))
+                                          text-align: justify;
+                                          font-size: 15px;
+                                         }
+                                         "))
                  ),
       navbarMenu("Information",  
         
         tabPanel("Table",
           sidebarLayout(
             sidebarPanel(
-              selectInput("input_year", "Year", choices = sort(data$year)),
+              sliderInput("input_year", "Year", value = 1985, min = 1985, max = 2016, sep=""),
               selectInput("input_country","Country", choices = sort(data$country)),
-              radioButtons("input_gender","Sex", choices = c("male" , "female", "Both")),
+              radioButtons("input_gender","Sex", choices = c("Male" , "Female", "Both")),
               selectInput("input_age","Age Group", choices = sort(data$age))
             ), mainPanel(
               dataTableOutput("table")
@@ -55,7 +58,7 @@ shinyUI(fluidPage(
                  sidebarLayout(
                    sidebarPanel(selectInput("vis_year", "Year", choices = as.integer(sort(data$year))),
                                 selectInput("vis_country","Country", choices = sort(data$country)),
-                                radioButtons("vis_gender","Sex", choices = c("male" , "female", "Both"))),
+                                radioButtons("vis_gender","Sex", choices = c("Male" , "Female", "Both"))),
                    mainPanel(
                                   plotOutput("barg"),
                                   textOutput("bar_explanation")
@@ -112,6 +115,7 @@ shinyUI(fluidPage(
                    textOutput("lakshay"), 
                    textOutput("ethan_title"), 
                    textOutput("ethan"),
+                   textOutput("work_cite_title"),
                    
                    tags$head(tags$style("#project_descr_title{
                                           color: 	#00BFFF;
@@ -126,11 +130,14 @@ shinyUI(fluidPage(
                                           color: #00BFFF;
                                           font-size: 20px}
                                          #kevin_title{
-                                          font-size: 15px}
+                                          font-size: 20px}
                                          #lakshay_title{
-                                          font-size: 15px}
+                                          font-size: 20px}
                                          #ethan_title{
-                                          font-size: 15px}"))
+                                          font-size: 20px}
+                                         #work_cite_title{
+                                          color: #00BFFF;
+                                          font-size: 20px}"))
                    # , 
                    # 
                    # img(src = "https://scontent-sea1-1.xx.fbcdn.net/v/t1.15752-9/62124086_446626162786376_1588243610019561472_n.jpg?_nc_cat=101&_nc_oc=AQnOxRD0-nQ0lQx1pMxyPN6yCE3zQTPJuIK5mIP_Z4ZQ_hj4VdjqGaerF07A8jsoKTQ&_nc_ht=scontent-sea1-1.xx&oh=0b496315de07a536dfdc41a303807150&oe=5D8333AB", height = 325, Width = 300),

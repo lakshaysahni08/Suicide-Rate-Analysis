@@ -42,7 +42,7 @@ shinyServer(function(input, output) {
   output$table <- renderDataTable({
     # Warning messages for user to see if no values selected
     validate(
-      need(input$input_year, message = "Please select year."),
+    
       need(input$input_country, message = "Please select country."),
       need(input$input_age, message = "Please select intended age group.")
       
@@ -72,8 +72,8 @@ shinyServer(function(input, output) {
       
       # bar graph with ggplot 
       output <- ggplot(both_case, aes(both_case$age, both_case$suicides_no, fill = both_case$sex)) + geom_bar(stat="identity", position ="dodge") +
-        scale_fill_brewer(palette = "Set1") + labs(title = " A Look into Suicide numbers for each Age Group for both genders") + 
-        xlab("Age Groups") + ylab("Number of Suicides")
+        scale_fill_brewer(palette = "Set1") + labs(title = " A Look into Suicide numbers for each Age Group for both genders", fill = "Gender") + 
+        xlab("Age Groups") + ylab("Number of Suicides") 
       output
       
     } else {
@@ -179,6 +179,11 @@ shinyServer(function(input, output) {
   output$pie_analysis <- renderPlotly({
     test2 <- data %>% filter(input$country_for_analysis == country, input$analysis_for_year == year, input$analysis_for_sex == sex)
     value <- test2[,5]
+    
+    validate( 
+      need(nrow(test2) > 1,  "Please select country. If there is no plot after selecting country, for this specific year, there were no recorded data.")
+    )
+    
     p <- plot_ly(test2, labels = test2$age , values = value, type = 'pie') %>% layout(title = 'Percentage of Each Age Group in Comparison with Suicide Numbers') 
     p
   })
@@ -281,6 +286,10 @@ shinyServer(function(input, output) {
   })
   output$ethan <- renderText({
     bio <- paste("A sophomore in Informatics.")
+  })
+  
+  output$work_cite_title <- renderText({
+    title <- paste("Works Cited")
   })
   
 })
