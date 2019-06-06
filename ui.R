@@ -37,6 +37,17 @@ shinyUI(fluidPage(
                                           text-align: justify;
                                           font-size: 15px;
                                          }
+                                         ")),
+                    textOutput("Source_Title"),
+                    uiOutput("Source_link"),
+                    tags$head(tags$style("#Source_Title{
+                                         color:#00BFFF;
+                                         font-size: 20px; 
+                                         text-align: left;}
+                                         #Source_link{
+                                          text-align: justify;
+                                          font-size: 15px;
+                                         }
                                          "))
                  ),
       navbarMenu("Information",  

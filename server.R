@@ -36,7 +36,16 @@ shinyServer(function(input, output) {
                   do not provide the most precise and narrow statistics and numbers to show if there is a relationship in these 
                   examinations, we present our findings in the form that you can come and see some general trends and data 
                   findings.")
-  })
+    })
+    output$Source_Title <- renderText({
+        text <- paste0("Source Used: ")
+    })
+    
+    output$Source_link <- renderUI({
+        url <- a("Suicide Information", href ="https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016")
+        tagList(url)
+    })
+  
   
   # Data table
   output$table <- renderDataTable({
